@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect, } from 'react'
+import React, { useState, useRef, useContext, useEffect, useCallback } from 'react'
 import {
     AppBar,
     Box,
@@ -21,6 +21,10 @@ import { Link, } from '../'
 import MenuIcon from '@mui/icons-material/Menu'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
+import { styled } from '@mui/material/styles'
+
+import LogoLight from '../../assets/images/v2-black.png'
+import LogoDark from '../../assets/images/v2-white.png'
 
 import { ColorModeContext } from '../../routes'
 
@@ -159,11 +163,18 @@ const Navbar = (props) => {
             ref: contactRef,
         },
     ]
-
+    const [logo, setLogo] = useState(theme.palette.mode === 'dark' ? LogoDark : LogoLight)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [show, setShow] = useState(true)
     const [firsTimeRender, setTirsTimeRender] = useState(true)
     const lastScrollY = useRef(0)
+
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '35px',
+    })
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen)
@@ -209,6 +220,34 @@ const Navbar = (props) => {
             </List>
         </Box>
     )
+
+    const onHoverLogo = useCallback((isEnter) => {
+        if (isEnter) {
+            if (theme.palette.mode === 'dark') {
+                setLogo(LogoLight)
+            }
+            else {
+                setLogo(LogoDark)
+            }
+        }
+        else {
+            if (theme.palette.mode === 'dark') {
+                setLogo(LogoDark)
+            }
+            else {
+                setLogo(LogoLight)
+            }
+        }
+    }, [theme.palette.mode])
+
+    useEffect(() => {
+        if (theme.palette.mode === 'dark') {
+            setLogo(LogoDark)
+        }
+        else {
+            setLogo(LogoLight)
+        }
+    }, [theme.palette.mode])
 
     useEffect(() => {
         const handleScroll = event => {
@@ -271,18 +310,31 @@ const Navbar = (props) => {
                             <Button
                                 key={'navbarlogo'}
                                 sx={{
-                                    color: 'text.primary',
-                                    textTransform: 'none'
+                                    borderRadius: 0,
+                                    ':hover': {
+                                        color: 'primary.secondary',
+                                        fontWeight: 'bold',
+                                        backgroundColor: 'text.primary',
+
+                                    },
                                 }}
+                                // sx={{
+                                //     color: 'text.primary',
+                                //     textTransform: 'none'
+                                // }}
+                                onMouseEnter={() => onHoverLogo(true)}
+                                onMouseLeave={() => onHoverLogo(false)}
                                 onClick={() => scrollToSection(startPageRef)}
                             >
-                                <Typography
+                                {/* <Typography
                                     variant='h6'
                                     color='inherit'
                                     component='div'
                                 >
                                     LOGO
-                                </Typography>
+                                </Typography> */}
+
+                                <Img alt='Logo' src={logo} />
                             </Button>
                         </Box>
 
