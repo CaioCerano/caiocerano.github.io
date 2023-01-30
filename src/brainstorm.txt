@@ -1,0 +1,99 @@
+Ideas
+
+- Base
+    - Responsividade***
+    - Clean (nem tanto)
+    - Cores
+    - Infos
+        - About(skills)
+        - Where I've worked
+        - Works
+        - Contact
+
+        #6610f2
+        #6f42c1
+- Visuals
+    - font?
+    - View descendo (animada) revelando background (como se fosse uma janela)
+    - Preto e Branco + glitch effect
+
+- Concepts
+    - task list for site inside the site
+    - all my contacts
+        - linkedin
+        - github
+        - email
+        - resume
+    - easter eggs
+    - multiplos temas??
+        - dark/light/(black/white)
+
+- Functional
+    - RESPONSIVIDADE
+        - https://styled-components.com/ecosystem
+        - Mobile
+        - Desktop
+    - Styling?
+    - Absolute Path
+
+- EFEITOS
+    https://www.youtube.com/watch?v=FuGPln0kO5Q&ab_channel=DesignCourse
+    https://www.youtube.com/watch?v=At6XyItIHsE&ab_channel=DesignCourse
+
+- Referencias
+    - Sites
+        - https://angrytools.com
+        - https://animista.net
+        
+    - Portfolios
+        - https://www.youtube.com/watch?v=KWVJTRWILjU&ab_channel=AdrianTwarog
+        - https://www.youtube.com/watch?v=l17NmY_H-E8&ab_channel=AdrianTwarog
+        - https://www.youtube.com/watch?v=PkADl0HubMY&ab_channel=Hyperplexed
+        - https://www.youtube.com/watch?v=GSPUUN4nDGE&ab_channel=Hyperplexed
+        https://brittanychiang.com
+        http://riccardozanutta.com
+        https://www.youtube.com/watch?v=28w5uJng-_c&ab_channel=JesseNyberg
+        https://www.bobng.me/#home
+        https://geyer.de
+        https://octavian.work
+        https://joehan.io
+        https://zakschenck.github.io/portfolio-website/
+        https://ui-portfolio.netlify.app
+        https://timroussilhe.com
+        https://p5aholic.me
+        https://bepatrickdavid.com
+        https://jacekjeznach.com
+        https://dunks1980.com
+        https://jant.fr
+        https://wilian.webflow.io
+
+        https://www.hostinger.com/tutorials/web-developer-portfolio
+        https://github.com/amsXYZ/three-fluid-sim
+        https://www.reddit.com/r/webflow/comments/qekcuq/mouse_cursor_smoke_animation/
+
+
+        
+    - https://www.youtube.com/watch?v=PkADl0HubMY&ab_channel=Hyperplexed
+    https://www.youtube.com/watch?v=IhnNPCc8S74&ab_channel=Codegrid
+    https://www.youtube.com/results?search_query=glitch+effect+on+hover+web
+    https://webflow.com/blog/parallax-scrolling
+    https://www.youtube.com/watch?v=RdcuOF4GSXk&ab_channel=DeveloperFilip
+    
+    https://github.com/amitozdeol/awesome-dev-websites
+   
+    
+    https://freefrontend.com/css-text-glitch-effects/
+    https://www.reddit.com/r/Frontend/comments/jxta5m/portfolio_megathread/
+
+    - hover image https://www.youtube.com/watch?v=bwq0AhQdmpQ&ab_channel=MakeDreamWebsite
+    https://www.youtube.com/watch?v=YBXSeIXt5TE&ab_channel=FreeFrontend
+
+*****
+* Default path (404)
+* Estilização mobile appbar
+
+https://convertingcolors.com/hex-color-282C34.html?search=282c34
+https://unsplash.com/pt-br
+For people wondering how to have a custom domain instead of “repo-name.github.io”, if you are a student, sign up for GitHub student developer pack. It provides you numerous premium services including Canva, JetLab tools, and other cloud services.
+
+GitHub student pack gives you 1 free domain on NameCheap. Create an account there, get a custom domain and configure your repo accordingly.

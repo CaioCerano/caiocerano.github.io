@@ -1,0 +1,1192 @@
+const WorkCard = ({ title, developer, date, description, image, technologies, right = false, first = false }) => {
+
+    const workCardControls = useAnimation()
+    const workCardImageControls = useAnimation()
+    const workCardRef = useRef(null)
+
+    const { ref: inViewWorkCardRef, inView: inViewWorkCard, entry: entryAbout } = useInView({
+        delay: 100,
+        threshold: 0.1,
+    })
+
+    const setWorkCardRefs = useCallback((node) => {
+        workCardRef.current = node
+        inViewWorkCardRef(node)
+    }, [inViewWorkCardRef])
+
+    useEffect(() => {
+        if (inViewWorkCard) {
+            workCardControls.start({
+                opacity: 1,
+                x: 0,
+            })
+            workCardImageControls.start({
+                opacity: 1,
+            })
+        }
+        else {
+            workCardControls.start({
+                opacity: 0,
+                x: right ? '100%' : '-100%',
+            })
+            workCardImageControls.start({
+                opacity: 0,
+            })
+        }
+    }, [inViewWorkCard])
+
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    })
+
+    return (
+        <Box
+            ref={setWorkCardRefs}
+            sx={{
+                flex: 1,
+                position: 'relative',
+                display: 'grid',
+
+                alignItems: 'center',
+                justifyContent: right && 'flex-end',
+                width: '100%',
+
+                mt: first ? 8 : 16,
+            }}
+        >
+            {/* <Button
+                onClick={() => {
+                    workCardControls.start({
+                        x: 0,
+                        opacity: 1,
+                    })
+                }}
+            >
+                teste
+            </Button> */}
+
+            <Box
+                component={motion.div}
+                initial={{ opacity: 0, }}
+                animate={workCardImageControls}
+                transition={{
+                    duration: 0.5,
+                    delay: 0,
+                }}
+
+                sx={{
+                    position: { sm: 'relative', md: 'absolute' },
+
+                    zIndex: 1,
+                    flex: 1,
+                    display: 'flex',
+
+                    maxWidth: { sm: '100%', md: '540px' },
+                    width: { sm: '100%', md: '55%' },
+                    minWidth: { sm: '100%', md: '380px' },
+
+                    height: 'auto',
+                    maxHeight: '100%',
+
+                    justifyItems: 'center',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+
+
+                    mb: { xs: 2, sm: 2, md: 0 },
+
+                    left: right && { xs: undefined, sm: undefined, md: 0 },
+                    right: right ? { xs: 0, sm: 0, md: undefined } : 0,
+                }}
+            >
+                <Img
+                    alt={title + 'label'} src={image}
+                    sx={{
+                        filter: 'grayscale(100%) contrast(1) brightness(50%)',
+                        // width: '100%',
+                        // height: 'auto',
+                        transitionDuration: '0.3s',
+
+                        '&:hover': {
+                            transitionDuration: '0.5s',
+                            // mixBlendMode: 'multiply',
+                            filter: 'grayscale(0%) contrast(1) brightness(100%)',
+                        },
+                    }}
+                />
+            </Box>
+
+            <Box
+                sx={{
+                    flex: 1,
+                    width: '100%',
+                    minWidth: { sm: '100%', md: '400px' },
+                    maxWidth: { sm: '480px', md: '480px' },
+                    mr: 0,
+                    overflow: 'hidden',
+                }}
+            >
+                <Typography
+                    component={motion.div}
+                    initial={{ x: right ? '100%' : '-100%', opacity: 0, }}
+                    animate={workCardControls}
+                    transition={{
+                        duration: 0.5,
+                        delay: 0,
+                        ease: [0.1, 0.2, .24, 1]
+                    }}
+
+                    sx={{
+                        m: 0,
+                        color: mainWhite,
+                        // '&:nth-of-type(even)': {
+                        //     textAlign: 'right',
+                        // }
+
+                        textAlign: right && { xs: 'left', sm: 'left', md: 'right' },
+                    }}
+                >
+                    {developer + ' - ' + date}
+                </Typography>
+                <Typography
+                    component={motion.div}
+                    initial={{ x: right ? '100%' : '-100%', opacity: 0, }}
+                    animate={workCardControls}
+                    transition={{
+                        duration: 0.5,
+                        delay: 0.2,
+                        ease: [0.1, 0.2, .24, 1]
+                    }}
+                    variant='h4'
+                    sx={{
+                        color: mainPurple,
+                        position: 'static',
+                        fontWeight: 900,
+                        mb: 2,
+
+                        textAlign: right && { xs: 'left', sm: 'left', md: 'right' },
+                    }}
+                >
+                    {title}
+                </Typography>
+                {/* <Typography sx={[{
+                    m: 0,
+                    mb: '8px',
+                    color: mainWhite,
+                },
+                right && {
+                    textAlign: { xs: 'left', sm: 'left', md: 'right' },
+                },
+                ]}>
+                    {date}
+                </Typography> */}
+                <Box
+                    component={motion.div}
+                    initial={{ x: right ? '100%' : '-100%', opacity: 0, }}
+                    animate={workCardControls}
+                    transition={{
+                        duration: 1,
+                        delay: 0.4,
+                        ease: [0.1, 0.2, .24, 1]
+                    }}
+
+                    sx={{
+                        zIndex: 3,
+
+                        borderRadius: 1,
+                        padding: 3,
+                        position: 'relative',
+
+                        backgroundColor: 'rgba(33, 33, 33, 0.4)',
+                        backdropFilter: 'blur(10px)',
+                        color: mainWhite
+                    }}
+                >
+                    {description}
+                </Box>
+                <Stack
+                    component={motion.div}
+                    initial={{ x: right ? '100%' : '-100%', opacity: 0, }}
+                    animate={workCardControls}
+                    transition={{
+                        duration: 0.7,
+                        delay: 0.8,
+                        ease: [0.1, 0.2, .24, 1]
+                    }}
+
+                    direction="row"
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        position: 'relative',
+                        justifyContent: 'flex-start',
+                        mt: '8px',
+
+                        justifyContent: right && { xs: 'flex-start', sm: 'flex-start', md: 'flex-end' },
+                        zIndex: 4,
+                    }}
+                >
+                    {technologies && technologies.length > 0 && technologies.map(({ label, link }, index) => {
+                        return <Typography
+                            sx={[{
+                                color: mainWhite,
+                                textAlign: 'center',
+                                color: mainWhite,
+
+                                px: 1,
+                                mt: 1,
+
+                                backgroundColor: 'rgba(33, 33, 33, 0.6)',
+                                backdropFilter: 'blur(10px)',
+
+                                zIndex: 4,
+                            },
+                            !right && {
+                                mr: 2,
+                            },
+                            right && {
+                                ml: { xs: 0, sm: 0, md: 2 },
+                                mr: { xs: 2, sm: 2, md: 0 },
+                            },
+                            ]}
+                            onClick={link}
+                            key={index}
+                        >
+                            {label}
+                        </Typography>
+                    })}
+                </Stack>
+            </Box>
+        </Box>
+    )
+}
+
+const MotionContactInfoBarCopy = () => {
+    return (
+        <Box
+            direction='row'
+            sx={{
+                display: 'flex',
+                width: '100%',
+                zIndex: 2,
+                left: 0,
+                top: '8em',
+                zIndex: 9999
+            }}>
+            <motion.div
+                initial={{ width: 0, }}
+                animate={{ width: '70%', }}
+                transition={{
+                    duration: 1,
+                    delay: 1,
+                }}
+                style={{
+                    height: '100%',
+                    backgroundColor: 'rgba(33, 33, 33, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    position: 'absolute',
+                }}
+            />
+            <motion.div
+                initial={{ width: 0, }}
+                animate={{ width: '30%', }}
+                transition={{
+                    duration: 0.4,
+                    delay: 2,
+                }}
+                style={{
+                    width: '30%',
+                    height: '100%',
+                    position: 'absolute',
+                    marginLeft: '70%',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                }}
+            />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                    duration: 1,
+                    delay: 2,
+                }}
+                style={{
+                    display: 'flex',
+                    height: '16px',
+                    paddingLeft: '1em',
+                    alignItems: 'center',
+                    paddingTop: '0.5em',
+                    paddingBottom: '0.5em',
+                    direction: 'row',
+                }}
+            >
+
+                {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, height: '100%', backgroundColor: mainWhite, marginRight: '1em' }} /> */}
+                <IconButton onClick={() => window.open('https://www.linkedin.com/in/caio-cerano')}>
+                    <LinkedIn sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                </IconButton>
+                <IconButton onClick={() => window.open('https://www.linkedin.com/in/caio-cerano')}>
+                    <GitHub sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                </IconButton>
+                <IconButton onClick={() => window.open('https://www.linkedin.com/in/caio-cerano')}>
+                    <EmailOutlined sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                </IconButton>
+            </motion.div>
+            {/* <motion.div
+                initial={{ opacity: 0, x: '-32vw' }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                    duration: 1,
+                    delay: 1,
+                }}
+            >
+                <Box
+                    direction='row'
+                    sx={{
+                        display: 'flex',
+                        height: '16px',
+                        width: '18vw',
+                        zIndex: 2,
+                        position: 'absolute',
+                        left: 0,
+                        top: 100,
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, height: '100%', backgroundColor: mainWhite, marginRight: '1em' }} />
+                    <IconButton onClick={() => window.open('https://www.linkedin.com/in/caio-cerano')}>
+                        <LinkedIn sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                    </IconButton>
+                </Box>
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, x: '-32vw' }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                    duration: 1,
+                    delay: 0.8,
+                }}
+            >
+                <Box
+                    direction='row'
+                    sx={{
+                        display: 'flex',
+                        height: '16px',
+                        width: '22vw',
+                        zIndex: 2,
+                        position: 'absolute',
+                        left: 0,
+                        top: 130,
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                    }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, height: '100%', backgroundColor: mainWhite, marginRight: '1em' }} />
+                    <IconButton onClick={() => window.open('https://github.com/CaioCerano')}>
+                        <GitHub sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                    </IconButton>
+                </Box>
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, x: '-32vw' }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                    duration: 1,
+                    delay: 0.6,
+                }}
+            >
+                <Box
+                    direction='row'
+                    sx={{
+                        display: 'flex',
+                        height: '16px',
+                        width: '26vw',
+                        zIndex: 2,
+                        position: 'absolute',
+                        left: 0,
+                        top: 160,
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                    }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, height: '100%', backgroundColor: mainWhite, marginRight: '1em' }} />
+                    <IconButton onClick={() => console.log('email trigger')}>
+                        <EmailOutlined sx={{ marginRight: '1em', color: mainWhite, fontSize: '22px' }} />
+                    </IconButton>
+                </Box>
+            </motion.div> */}
+        </Box>
+    )
+}
+
+const ExperienceCard2 = ({ image, title, description, }) => {
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    })
+
+    return (
+        <Box
+            sx={{
+                p: 0,
+                margin: 'auto',
+                marginTop: 2,
+                width: '100%',
+                flexGrow: 1,
+                backgroundColor: 'red',
+                // backgroundColor: '#1A2027',
+            }}
+        >
+            <Grid container spacing={2}>
+                <Grid item>
+                    <ButtonBase
+                        sx={{
+                            // width: '100%',
+                            backgroundColor: 'blue',
+                            width: 128,
+                            // height: '100%'
+                        }}
+                    >
+                        <Img alt={title + 'label'} src={image} />
+                    </ButtonBase>
+                </Grid>
+                <Grid
+                    item
+                    sm={12}
+                    md
+                    container
+                >
+                    <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                            <Typography gutterBottom variant="subtitle1" component="div">
+                                {title}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom sx={{
+                                color: 'rgb(203, 213, 225)'
+                            }}>
+                                {description}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Box>
+    )
+}
+
+const WorkCardCopy2 = ({ title, developer, date, description, image, technologies, }) => {
+
+    const StyledProject = styledComponents.li`
+    position: relative;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    &:not(:last-of-type) {
+        margin-bottom: 100px;
+        @media (max-width: 768px) {
+        margin-bottom: 70px;
+        }
+        @media (max-width: 480px) {
+        margin-bottom: 30px;
+        }
+    }
+    .project-content {
+        position: relative;
+        grid-column: 1 / 7;
+        grid-row: 1 / -1;
+        @media (max-width: 1080px) {
+        grid-column: 1 / 9;
+        }
+        @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        grid-column: 1 / -1;
+        padding: 40px 40px 30px;
+        z-index: 5;
+        }
+        @media (max-width: 480px) {
+        padding: 30px 25px 20px;
+        }
+    }
+    .project-overline {
+        margin: 10px 0;
+        color: var(--green);
+        font-family: var(--font-mono);
+        font-size: var(--fz-xs);
+        font-weight: 400;
+    }
+    .project-title {
+        color: var(--lightest-slate);
+        font-size: clamp(24px, 5vw, 28px);
+        @media (min-width: 768px) {
+        margin: 0 0 20px;
+        }
+        @media (max-width: 768px) {
+        color: var(--white);
+        a {
+            position: static;
+            &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            }
+        }
+        }
+    }
+    .project-description {
+        position: relative;
+        z-index: 2;
+        padding: 25px;
+        border-radius: var(--border-radius);
+        background-color: var(--light-navy);
+        color: var(--light-slate);
+        font-size: var(--fz-lg);
+        @media (max-width: 768px) {
+        padding: 20px 0;
+        background-color: transparent;
+        box-shadow: none;
+        &:hover {
+            box-shadow: none;
+        }
+        }
+        a {
+        }
+        strong {
+        color: var(--white);
+        font-weight: normal;
+        }
+    }
+    .project-tech-list {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 2;
+        margin: 25px 0 10px;
+        padding: 0;
+        list-style: none;
+        li {
+        margin: 0 20px 5px 0;
+        color: var(--light-slate);
+        font-family: var(--font-mono);
+        font-size: var(--fz-xs);
+        white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+        margin: 10px 0;
+        li {
+            margin: 0 10px 5px 0;
+            color: var(--lightest-slate);
+        }
+        }
+    }
+    .project-links {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-top: 10px;
+        margin-left: -10px;
+        color: var(--lightest-slate);
+        a {
+        padding: 10px;
+        &.external {
+            svg {
+            width: 22px;
+            height: 22px;
+            margin-top: -4px;
+            }
+        }
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+        }
+        .cta {
+        margin: 10px;
+        }
+    }
+    .project-image {
+        grid-column: 6 / -1;
+        grid-row: 1 / -1;
+        position: relative;
+        z-index: 1;
+        @media (max-width: 768px) {
+        grid-column: 1 / -1;
+        height: 100%;
+        opacity: 0.25;
+        }
+        a {
+        width: 100%;
+        height: 100%;
+        background-color: var(--green);
+        border-radius: var(--border-radius);
+        vertical-align: middle;
+        &:hover,
+        &:focus {
+            background: transparent;
+            outline: 0;
+            &:before,
+            .img {
+            background: transparent;
+            filter: none;
+            }
+        }
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            transition: var(--transition);
+            background-color: var(--navy);
+            mix-blend-mode: screen;
+        }
+        }
+        .img {
+        border-radius: var(--border-radius);
+        mix-blend-mode: multiply;
+        filter: grayscale(100%) contrast(1) brightness(90%);
+        @media (max-width: 768px) {
+            object-fit: cover;
+            width: auto;
+            height: 100%;
+            filter: grayscale(100%) contrast(1) brightness(50%);
+        }
+        }
+    }
+`;
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    })
+
+    return (
+        <Box
+            sx={{
+                position: 'relative',
+                display: 'grid',
+                gridGap: '10px',
+                gridTemplateColumns: 'repeat(12, 1fr)',
+                alignItems: 'center',
+                '&:not(:last-of-type)': {
+                    marginBottom: '100px',
+                    '@media (max-width: 768px)': {
+                        marginBottom: '70px',
+                    },
+                    '@media (max-width: 480px)': {
+                        marginBottom: '30px',
+                    }
+                },
+
+                mt: '16px',
+            }}
+        >
+            <Box
+                sx={{
+                    position: 'relative',
+                    gridColumn: '1 / 7',
+                    gridRow: '1 / -1',
+                    '@media (max-width: 1080px)': {
+                        gridColumn: '1 / 9',
+                    },
+                    '@media (max-width: 768px)': {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        height: ' 100%',
+                        'gridColumn': '1 / -1',
+                        padding: '40px 40px 30px',
+                        zIndex: 5,
+                    },
+                    '@media (max-width: 480px)': {
+                        padding: '30px 25px 20px',
+                    },
+                }}
+            >
+                <Typography
+                    sx={{
+                        m: 0,
+                        color: mainWhite,
+                    }}
+                >
+                    {developer}
+                </Typography>
+
+                <Typography
+                    variant='h4'
+                    sx={{
+                        color: mainPurple,
+                        position: 'static',
+                        fontWeight: 900,
+                    }}
+                >
+                    {title}
+                </Typography>
+
+                <Typography sx={{
+                    m: 0,
+                    mb: '8px',
+                    color: mainWhite,
+                }}>
+                    {date}
+                </Typography>
+
+                <Paper
+                    sx={{
+                        position: 'relative',
+                        zIndex: 2,
+                        padding: '25px',
+
+                        backgroundColor: 'rgba(33, 33, 33, 0.6)',
+                        backdropFilter: 'blur(10px)',
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            color: mainWhite,
+                        }}
+                    >
+                        {description}
+                    </Typography>
+                </Paper>
+
+                <Stack direction="row" spacing={2} sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    position: 'relative',
+                    margin: '25px 0 10px',
+                }}>
+                    {technologies && technologies.length > 0 && technologies.map(({ label, link }) => {
+                        return <Box sx={{
+                            textAlign: 'center',
+                            color: mainPurple,
+                            p: 0.5,
+                        }} onClick={link}>
+                            {label}
+                        </Box>
+                    })}
+                </Stack>
+            </Box >
+
+            <Box
+                style={{
+                    gridColumn: '6 / -1',
+                    gridRow: '1 / -1',
+                    position: 'relative',
+                    zIndex: 1,
+                    '@media (max-width: 768px)': {
+                        gridColumn: '1 / -1',
+                        height: '100%',
+                        opacity: '0.25',
+                    },
+                    a: {
+                        width: '100%',
+                        height: '100%',
+                        verticalAlign: 'middle',
+                        // '&:hover',
+                        // '&:focus' {
+                        //     background: 'transparent',
+                        //     outline: 0,
+                        //     '&:before',
+                        //     // .img {
+                        //     //     background: transparent;
+                        //     // filter: none;
+                        //     // }
+                        // }
+                    }
+                }}
+            >
+                <Img
+                    alt={title + 'label'} src={image}
+                    sx={{
+                        // mix-blend-mode: multiply,
+                        // filter: 'grayscale(100%) contrast(1) brightness(50%)',
+                        // @media (max-width: 768px) {
+                        //     object - fit: cover;
+                        width: 'auto',
+                        height: '100%',
+                        '&:hover': {
+                            // background: 'linear-gradient(to right top,rgba(27, 18, 18, 0) 0%, rgba(27, 18, 18, 0) 50%, rgb(250, 249, 246))'
+                            filter: 'grayscale(100%) contrast(1) brightness(100%)',
+                        },
+                        //   }
+                    }}
+                />
+            </Box>
+        </Box >
+    )
+}
+
+const WorkCardTest = ({ title, description, image, }) => {
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    })
+
+    return (
+        <StyledProject >
+            <div className="project-content">
+                <Box sx={{ backgroundColor: 'red' }}>
+                    <p className="project-overline">Featured Project</p>
+
+                    <h3 className="project-title">
+                        <a>{'TITULO TESTE'}</a>
+                    </h3>
+
+                    <div
+                        className="project-description"
+                    // dangerouslySetInnerHTML={{ __html: html }}
+                    >
+                        <a>{'TESTETESTETESTE TESTE TESTE v TESTETESTETESTETESTE TESTETESTETESTETESTETESTETESTETESTETESTETESTE TESTETESTETESTETESTETESTETESTETESTETESTE TESTE'}</a>
+                    </div>
+
+                    <ul className="project-tech-list">
+                        <li key={'teste1'}>{'teste1'}</li>
+                        <li key={'teste2'}>{'teste2'}</li>
+                        {/* {tech.map((tech, i) => (
+                                <li key={i}>{tech}</li>
+                            ))} */}
+                    </ul>
+
+
+                    <div className="project-links">
+                        <a aria-label="Course Link" className="cta">
+                            Learn More
+                        </a>
+                        <a aria-label="GitHub Link">
+                            {/* <Icon name="GitHub" /> */}
+                        </a>
+                        <a aria-label="External Link" className="external">
+                            {/* <Icon name="External" /> */}
+                        </a>
+                    </div>
+                </Box>
+            </div>
+
+            <div className="project-image">
+                <Img alt={title + 'label'} src={SiteImage} />
+            </div>
+        </StyledProject>
+    )
+}
+
+const StyledProject = styledComponents.li`
+  position: relative;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+
+  &:not(:last-of-type) {
+    margin-bottom: 100px;
+    @media (max-width: 768px) {
+      margin-bottom: 70px;
+    }
+    @media (max-width: 480px) {
+      margin-bottom: 30px;
+    }
+  }
+  &:nth-of-type(odd) {
+    .project-content {
+      grid-column: 7 / -1;
+      text-align: right;
+      @media (max-width: 1080px) {
+        grid-column: 5 / -1;
+      }
+      @media (max-width: 768px) {
+        grid-column: 1 / -1;
+        padding: 40px 40px 30px;
+        text-align: left;
+      }
+      @media (max-width: 480px) {
+        padding: 25px 25px 20px;
+      }
+    }
+    .project-tech-list {
+      justify-content: flex-end;
+      @media (max-width: 768px) {
+        justify-content: flex-start;
+      }
+      li {
+        margin: 0 0 5px 20px;
+        @media (max-width: 768px) {
+          margin: 0 10px 5px 0;
+        }
+      }
+    }
+    .project-links {
+      justify-content: flex-end;
+      margin-left: 0;
+      margin-right: -10px;
+      @media (max-width: 768px) {
+        justify-content: flex-start;
+        margin-left: -10px;
+        margin-right: 0;
+      }
+    }
+    .project-image {
+      grid-column: 1 / 8;
+      @media (max-width: 768px) {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+  .project-content {
+    position: relative;
+    grid-column: 1 / 7;
+    grid-row: 1 / -1;
+    @media (max-width: 1080px) {
+      grid-column: 1 / 9;
+    }
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      grid-column: 1 / -1;
+      padding: 40px 40px 30px;
+      z-index: 5;
+    }
+    @media (max-width: 480px) {
+      padding: 30px 25px 20px;
+    }
+  }
+  .project-overline {
+    margin: 10px 0;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    font-weight: 400;
+  }
+  .project-title {
+    color: var(--lightest-slate);
+    font-size: clamp(24px, 5vw, 28px);
+    @media (min-width: 768px) {
+      margin: 0 0 20px;
+    }
+    @media (max-width: 768px) {
+      color: var(--white);
+      a {
+        position: static;
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          z-index: 0;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+  .project-description {
+    position: relative;
+    z-index: 2;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    background-color: var(--light-navy);
+    color: var(--light-slate);
+    font-size: var(--fz-lg);
+    @media (max-width: 768px) {
+      padding: 20px 0;
+      background-color: transparent;
+      box-shadow: none;
+      &:hover {
+        box-shadow: none;
+      }
+    }
+    a {
+    }
+    strong {
+      color: var(--white);
+      font-weight: normal;
+    }
+  }
+  .project-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+    margin: 25px 0 10px;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 0 20px 5px 0;
+      color: var(--light-slate);
+      font-family: var(--font-mono);
+      font-size: var(--fz-xs);
+      white-space: nowrap;
+    }
+    @media (max-width: 768px) {
+      margin: 10px 0;
+      li {
+        margin: 0 10px 5px 0;
+        color: var(--lightest-slate);
+      }
+    }
+  }
+  .project-links {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 10px;
+    margin-left: -10px;
+    color: var(--lightest-slate);
+    a {
+      padding: 10px;
+      &.external {
+        svg {
+          width: 22px;
+          height: 22px;
+          margin-top: -4px;
+        }
+      }
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .cta {
+      margin: 10px;
+    }
+  }
+  .project-image {
+    grid-column: 6 / -1;
+    grid-row: 1 / -1;
+    position: relative;
+    z-index: 1;
+    @media (max-width: 768px) {
+      grid-column: 1 / -1;
+      height: 100%;
+      opacity: 0.25;
+    }
+    a {
+      width: 100%;
+      height: 100%;
+      background-color: var(--green);
+      border-radius: var(--border-radius);
+      vertical-align: middle;
+      &:hover,
+      &:focus {
+        background: transparent;
+        outline: 0;
+        &:before,
+        .img {
+          background: transparent;
+          filter: none;
+        }
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 3;
+        transition: var(--transition);
+        background-color: var(--navy);
+        mix-blend-mode: screen;
+      }
+    }
+    .img {
+      border-radius: var(--border-radius);
+      mix-blend-mode: multiply;
+      filter: grayscale(100%) contrast(1) brightness(90%);
+      @media (max-width: 768px) {
+        object-fit: cover;
+        width: auto;
+        height: 100%;
+        filter: grayscale(100%) contrast(1) brightness(50%);
+      }
+    }
+  }
+`;
+
+{/* <Box
+                    sx={{
+                        display: 'flex',
+                        // flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        flexDirection: 'column',
+
+                        maxHeight: '800px',
+                        // maxHeight: '60vh',
+
+                        zIndex: 1000,
+
+                        backgroundColor: mainWhite,
+                    }}
+                    p={4}
+                >
+                    <Typography
+                        // variant='h5'
+                        sx={{
+                            color: 'rgb(0, 0, 0)',
+                            paddingTop: 2,
+                        }}
+                        noWrap={false}
+                    >
+                        Hello! I’m Caio, and i'm currently studying for bachelor's degree in Computer Science and Science and Technology at Federal University of ABC.
+
+                        and I enjoy creating things that live on the internet. My interest in web development started back in 2012 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!
+                        Fast-forward to today, and I’ve had the privilege of working at an advertising agency, a start-up, a huge corporation, and a student-led design studio. My main focus these days is building accessible, inclusive products and digital experiences at Upstatement for a variety of clients.
+
+                    </Typography>
+                    <Typography
+                        sx={{
+                            color: 'rgb(0, 0, 0)',
+                            paddingTop: 2,
+                        }}
+                    >
+                        Skills:
+                    </Typography>
+
+                    <Typography
+                        sx={{
+                            color: 'rgb(0, 0, 0)',
+                            paddingTop: 2,
+                        }}
+                    >
+                        React, React-Native, JavaScript, Typescript, Redux, HTML5, CSS3
+                    </Typography>
+                    <Typography
+                        sx={{
+                            color: 'rgb(0, 0, 0)',
+                            paddingTop: 2,
+                        }}
+                    >
+                        Node.js, MySQL
+                    </Typography>
+                    <Typography
+                        sx={{
+                            color: 'rgb(0, 0, 0)',
+                            paddingTop: 2,
+                        }}
+                    >
+                        Photoshop, Illustrator, Figma
+                    </Typography>
+                </Box> */}
