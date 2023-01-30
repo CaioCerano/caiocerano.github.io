@@ -22,8 +22,8 @@ const MotionContactInfoBar = () => {
     const iconStyle = {
         color: 'primary.main',
         fontSize: '22px',
-        px: '5px',
-        py: '10px',
+        mx: '5px',
+        my: '10px',
 
         '&:hover': {
             color: 'primary.purple',
@@ -237,7 +237,6 @@ const Main = () => {
                     sx={{
                         flex: 1,
                         width: '80%',
-                        // width: '90%', 
                         maxWidth: '960px',
                     }}
                 >
@@ -251,9 +250,20 @@ const Main = () => {
                     <Experience
                         experienceRef={experienceRef}
                     />
-                    <Work
-                        workRef={workRef}
-                    />
+                </Box>
+
+                <Work
+                    workRef={workRef}
+                />
+
+                <Box
+                    sx={{
+                        flex: 1,
+                        width: '80%',
+                        maxWidth: '960px',
+
+                    }}
+                >
                     <Contact
                         contactRef={contactRef}
                     />

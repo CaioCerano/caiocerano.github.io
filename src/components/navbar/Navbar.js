@@ -103,7 +103,6 @@ const ButtonTheme = (props) => {
                 color: 'text.primary',
                 borderRadius: 0,
                 textTransform: 'none',
-                p: 1,
                 marginLeft: { sm: '10px', md: '30px' },
                 ':hover': {
                     color: 'primary.secondary',
@@ -112,17 +111,16 @@ const ButtonTheme = (props) => {
                 },
             }}
             onClick={colorMode.toggleColorMode}
-        // color='primary.main'
         >
             {theme.palette.mode === 'dark'
                 ?
                 <>
-                    <DarkModeIcon sx={{ pr: 1, }} />
+                    <DarkModeIcon sx={{ fontSize: '26px !important', p: 0, pr: 1, m: 0, height: '18px', }} />
                     Dark
                 </>
                 :
                 <>
-                    <LightModeIcon sx={{ pr: 1, }} />
+                    <LightModeIcon sx={{ fontSize: '26px !important', p: 0, pr: 1, m: 0, height: '18px', }} />
                     Light
                 </>
             }
@@ -134,7 +132,7 @@ const ButtonTheme = (props) => {
 const drawerWidth = 240
 
 const Navbar = (props) => {
-    const {startPageRef, listInnerRef, aboutRef, experienceRef, workRef, contactRef, } = props
+    const { startPageRef, listInnerRef, aboutRef, experienceRef, workRef, contactRef, } = props
 
     const theme = useTheme()
     const colorMode = useContext(ColorModeContext)
@@ -172,14 +170,17 @@ const Navbar = (props) => {
     }
 
     const scrollToSection = (elementRef) => {
-        elementRef.current.scrollIntoView({ behavior: 'smooth' })
+        // Idk why but the scrollIntoView only works for mobile browsers using the timeout function
+        setTimeout(() => {
+            elementRef.current.scrollIntoView({ behavior: 'smooth' })
+        }, 100);
     }
 
     // ----------------------------------Mobile----------------------------------
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', }}>
             <Button key={'home'}
-            // onClick={() => navigate('/home')} 
+                onClick={() => scrollToSection(startPageRef)}
             >
                 <Typography
                     variant='h6' color='inherit' component='div'
@@ -190,15 +191,21 @@ const Navbar = (props) => {
 
             <Divider />
             <List>
-                {navItems.map(({ name, }) => (
+                {navItems.map(({ name, ref }) => (
                     <ListItem key={name} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}
-                        // onClick={() => path && navigate(path)}
+                        <ListItemButton
+                            sx={{ textAlign: 'center', }}
+                            onClick={() => scrollToSection(ref)}
                         >
                             <ListItemText primary={name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
+
+                <ButtonTheme
+                    colorMode={colorMode}
+                    theme={theme}
+                />
             </List>
         </Box>
     )

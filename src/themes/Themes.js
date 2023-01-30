@@ -25,7 +25,7 @@ const theme = (mode) => ({
                     main: primaryWhite,
                     secondary: secondaryWhite,
 
-                    mainGlass: 'rgba(220, 220, 220, 0.6)',
+                    mainGlass: 'rgba(220, 220, 220, 0.5)',
                     navBarMain: 'rgba(220, 220, 220, 0.6)',
                     // navBarMain: 'rgba(207, 216, 220, 0.6)',
                     navBarSecondary: 'rgba(236, 239, 241, 0.4)',
@@ -100,35 +100,23 @@ const theme = (mode) => ({
                 },
             },
         },
-    },
-    overrides: {
         MuiCssBaseline: {
-            "@global": {
+            styleOverrides: {
                 body: {
-                    scrollbarColor: "#6b6b6b #2b2b2b",
-                    "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-                        backgroundColor: "#2b2b2b",
+                    scrollbarWidth: 'thin',
+                    '&::-webkit-scrollbar': {
+                        width: '0.3em',
+                        background: 'primary.secondary',
                     },
-                    "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-                        borderRadius: 8,
-                        backgroundColor: "#6b6b6b",
-                        minHeight: 24,
-                        border: "3px solid #2b2b2b",
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: '#888',
+                        borderRadius: '30px',
                     },
-                    "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus": {
-                        backgroundColor: "#959595",
-                    },
-                    "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active": {
-                        backgroundColor: "#959595",
-                    },
-                    "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover": {
-                        backgroundColor: "#959595",
-                    },
-                    "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-                        backgroundColor: "#2b2b2b",
-                    },
-                },
-            },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                        background: 'rgb(146, 15, 166)',
+                    }
+                }
+            }
         },
     },
 })

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, memo, } from 'react'
-import { motion, useAnimation, } from 'framer-motion'
+import { calcLength, motion, useAnimation, } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 import { useInView } from 'react-intersection-observer'
 
@@ -76,7 +76,6 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                     gridColumn: { md: right ? '6 / 12' : '1 / 7' },
                     // gridColumn: { md: right ? '7 / 12' : '1 / 6' },
                     mr: 0,
-                    overflow: 'hidden',
 
                     justifyContent: 'center',
                     flexDirection: 'column',
@@ -144,6 +143,8 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
 
                         backgroundColor: 'background.mainGlass',
                         backdropFilter: 'blur(10px)',
+                        //  offset-x | offset-y | blur-radius | spread-radius | color
+                        boxShadow: '0 8px 8px 0 rgba(0, 0, 0, 0.37)',
                         // color: 'primary.white',
                     }}
                 >
@@ -177,10 +178,11 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                                 textAlign: 'center',
 
                                 px: 1,
-                                mt: 1,
+                                mt: 2,
 
                                 backgroundColor: 'background.mainGlass',
                                 backdropFilter: 'blur(10px)',
+                                boxShadow: '0 4px 4px 0px rgba(0, 0, 0, 0.17)',
 
                                 mr: right ? { xs: 2, sm: 2, md: 0 } : 2,
                                 ml: right && { xs: 0, sm: 0, md: 2 },
@@ -208,6 +210,7 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                     display: 'flex',
 
                     gridRow: '1',
+                    // gridColumn: { md: right ? '1 / 7' : '6 / 12' },
                     gridColumn: { md: right ? '1 / 8' : '5 / 12' },
                     mb: { xs: 2, sm: 4, md: 0 },
 
@@ -248,176 +251,192 @@ const Work = ({ workRef, }) => {
     return (
         <Box
             sx={{
-                display: 'flex',
                 flex: 1,
-                width: '100%',
-                // height: '100vh',
-                paddingTop: 16,
-                paddingBottom: 16,
-                flexDirection: 'column',
+
+                // width e maxWidth customizados para incluir o BoxShadow + overflow: 'hidden'
+                width: { xs: '80%', sm: '80%', md: 'calc(80% + 16px)' },
+                maxWidth: { xs: '80%', sm: '80%', md: 'calc(976px)' },
+                // width: '80%', 
+                // maxWidth: '960px',
+
+                px: '-80px',
             }}
-            display='flex'
-            justifyContent='flex-start'
-            alignItems='flex-start'
-            ref={workRef}
         >
             <Box
                 sx={{
-                    flex: 1,
                     display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-
+                    flex: 1,
                     width: '100%',
-                    paddingBottom: 4,
+                    // height: '100vh',
+                    paddingTop: 16,
+                    paddingBottom: 16,
+                    flexDirection: 'column',
+                    px: '8px',
+                    overflow: 'hidden'
                 }}
+                display='flex'
+                justifyContent='flex-start'
+                alignItems='flex-start'
+                ref={workRef}
             >
-                <Typography variant='h3'>
-                    Work
-                </Typography>
                 <Box
                     sx={{
-                        flexGrow: 1,
-                        height: '1px',
-                        backgroundColor: 'text.main',
-                        marginLeft: 4,
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+
+                        width: '100%',
+                        paddingBottom: 4,
                     }}
+                >
+                    <Typography variant='h3'>
+                        Work
+                    </Typography>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            height: '1px',
+                            backgroundColor: 'text.main',
+                            marginLeft: 4,
+                        }}
+                    />
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        // flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        flexDirection: 'column',
+
+                        maxHeight: '800px',
+                        // maxHeight: '60vh',
+
+                        zIndex: 1000,
+
+                    }}
+                >
+                    <Typography>
+                        Here are some projects I've worked for the last years.
+                    </Typography>
+                </Box>
+
+                <MemoizedWorkCardGrid
+                    first
+                    developer='Personal Project'
+                    title='Portfolio Website'
+                    date='2023'
+                    description={[
+                        <Typography paragraph key={uuidv4()}>
+                            This is the site you are currently using and also my first personal portfolio website!
+                        </Typography>,
+                        <Typography paragraph key={uuidv4()}>
+                            It was built with the intention of showing my skills and experiences and I think this project has helped to vastly improve my design and web development skills.
+                        </Typography>,
+                        <Typography paragraph key={uuidv4()}>
+                            I mainly focused on learning and improving my skills in HTML, CSS, responsivity and design.
+                        </Typography>,
+                    ]}
+
+                    image={SiteImage2}
+                    technologies={[
+                        {
+                            label: 'React',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'MUI',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Styled Components',
+                            key: uuidv4(),
+                        }
+                    ]}
+                />
+                <MemoizedWorkCardGrid
+                    right
+                    developer='Experity'
+                    title='REsight'
+                    date='2021'
+                    description={[
+                        <Typography paragraph key={uuidv4()}>
+                            A retail execution and monitoring solution.
+                            I worked with a team for two years in this project and it consisted of both a web and mobile application.
+                        </Typography>,
+                        <Typography paragraph key={uuidv4()}>
+                            I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native.
+                        </Typography>,
+                    ]}
+
+                    image={SiteImage2}
+                    technologies={[
+                        {
+                            label: 'React',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'React Native',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Styled Components',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Redux',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'MySQL',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'SQLite',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Node.js',
+                            key: uuidv4(),
+                        },
+                    ]}
+                />
+                <MemoizedWorkCardGrid
+                    developer='YEY'
+                    title='Futuro Estágios'
+                    date='2019'
+                    description={[
+                        <Typography paragraph key={uuidv4()}>
+                            A web application for contract management.
+                        </Typography>,
+                    ]}
+
+                    image={SiteImage2}
+                    technologies={[
+                        {
+                            label: 'React',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'MUI',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Styled Components',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'MySQL',
+                            key: uuidv4(),
+                        },
+                        {
+                            label: 'Node.js',
+                            key: uuidv4(),
+                        },
+                    ]}
                 />
             </Box>
-            <Box
-                sx={{
-                    display: 'flex',
-                    // flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                    flexDirection: 'column',
-
-                    maxHeight: '800px',
-                    // maxHeight: '60vh',
-
-                    zIndex: 1000,
-
-                }}
-            >
-                <Typography>
-                    Here are some projects I've worked for the last years.
-                </Typography>
-            </Box>
-
-            <MemoizedWorkCardGrid
-                first
-                developer='Personal Project'
-                title='Portfolio Website'
-                date='2023'
-                description={[
-                    <Typography paragraph key={uuidv4()}>
-                        This is the site you are currently using and also my first personal portfolio website!
-                    </Typography>,
-                    <Typography paragraph key={uuidv4()}>
-                        It was built with the intention of showing my skills and experiences and I think this project has helped to vastly improve my design and web development skills.
-                    </Typography>,
-                    <Typography paragraph key={uuidv4()}>
-                        I mainly focused on learning and improving my skills in HTML, CSS, responsivity and design.
-                    </Typography>,
-                ]}
-
-                image={SiteImage2}
-                technologies={[
-                    {
-                        label: 'React',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'MUI',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Styled Components',
-                        key: uuidv4(),
-                    }
-                ]}
-            />
-            <MemoizedWorkCardGrid
-                right
-                developer='Experity'
-                title='REsight'
-                date='2021'
-                description={[
-                    <Typography paragraph key={uuidv4()}>
-                        A retail execution and monitoring solution.
-                        I worked with a team for two years in this project and it consisted of both a web and mobile application.
-                    </Typography>,
-                    <Typography paragraph key={uuidv4()}>
-                        I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native.
-                    </Typography>,
-                ]}
-
-                image={SiteImage2}
-                technologies={[
-                    {
-                        label: 'React',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'React Native',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Styled Components',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Redux',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'MySQL',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'SQLite',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Node.js',
-                        key: uuidv4(),
-                    },
-                ]}
-            />
-            <MemoizedWorkCardGrid
-                developer='YEY'
-                title='Futuro Estágios'
-                date='2019'
-                description={[
-                    <Typography paragraph key={uuidv4()}>
-                        A web application for contract management.
-                    </Typography>,
-                ]}
-
-                image={SiteImage2}
-                technologies={[
-                    {
-                        label: 'React',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'MUI',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Styled Components',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'MySQL',
-                        key: uuidv4(),
-                    },
-                    {
-                        label: 'Node.js',
-                        key: uuidv4(),
-                    },
-                ]}
-            />
         </Box>
     )
 }

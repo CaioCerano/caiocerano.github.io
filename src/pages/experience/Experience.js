@@ -72,7 +72,6 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                 display: 'flex',
                 gridRow: { md: '1' },
                 gridColumn: { md: '1 / 6' },
-                overflow: 'hidden',
                 width: '100%',
 
                 justifyContent: 'center',
@@ -80,7 +79,14 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                 mt: 8,
             }}
         >
-
+            <Typography
+                sx={{
+                    m: 0,
+                    mb: 1,
+                }}
+            >
+                {role}
+            </Typography>
             <Typography
                 variant='h4'
                 sx={{
@@ -91,7 +97,7 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                     mb: 1,
                 }}
             >
-                Experity
+                {company}
             </Typography>
             <Typography
 
@@ -103,7 +109,7 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                     // }
                 }}
             >
-                December 2019 - December 2021
+                {period}
             </Typography>
             <Box
 
@@ -120,16 +126,13 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                 }}
             >
                 <Typography paragraph>
-                    Developed and shipped highly interactive web applications for Apple Music using Ember.js
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque massa metus, efficitur a sodales nec, posuere sed est.
                 </Typography>
                 <Typography paragraph>
-                    Built and shipped the Apple Music Extension within Facebook Messenger leveraging third-party and internal APIs
+                    Quisque dictum nibh metus. Aliquam ac sapien aliquet magna pellentesque lacinia. Cras pulvinar elit turpis, at pretium ipsum congue eget. Sed eget dictum sapien, sed mattis libero. Morbi pulvinar sem non ligula dapibus cursus. Phasellus dolor dui, convallis vel vestibulum vitae, maximus sit amet mauris. Sed tellus est, feugiat vel ipsum sed, scelerisque ultricies risus.
                 </Typography>
                 <Typography paragraph>
-                    Architected and implemented the front-end of Apple Music's embeddable web player widget, which lets users log in and listen to full songs in the browser
-                </Typography>
-                <Typography paragraph>
-                    Contributed extensively to MusicKit.js, a JavaScript framework that allows developers to add an Apple Music player to their web apps
+                    Phasellus consequat velit ac diam placerat varius. Proin ultrices felis metus, eget molestie nisl bibendum nec. Aliquam posuere nibh sit amet hendrerit luctus.
                 </Typography>
                 <Grid container>
                     <Grid item sx={{ marginRight: 16, }}>
@@ -179,6 +182,7 @@ const Experience = ({ experienceRef, experienceControls, }) => {
                 paddingTop: 16,
                 paddingBottom: 16,
                 flexDirection: 'column',
+                overflow: 'hidden',
             }}
             display='flex'
             justifyContent='flex-start'
@@ -230,18 +234,18 @@ const Experience = ({ experienceRef, experienceControls, }) => {
             </Box>
 
             <ExperienceCard
-                role='Software Developer'
-                company='Experity - REsight'
-                period='December 2019 - December 2021'
-                description='Developed a mobile application focused on eCRM.'
-            />
-
-            <ExperienceCard
                 role='Software Engineer'
                 company='Accenture'
                 period='January 2021 - Current'
                 description='Currently developing foundation code of a web application for an internal project.'
             />
+
+            <ExperienceCard
+                role='Software Developer'
+                company='Experity - REsight'
+                period='December 2019 - December 2021'
+                description='Developed a mobile application focused on eCRM.'
+            />            
 
             {/* <Grid
                 container
