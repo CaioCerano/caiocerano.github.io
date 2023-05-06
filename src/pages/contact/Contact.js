@@ -1,15 +1,13 @@
-import React, { useState, } from 'react'
+import React from 'react'
 import { motion, } from 'framer-motion'
-import styled from 'styled-components'
 
-import { Box, Typography, Collapse, Alert, Button, Snackbar, } from '@mui/material'
-import { Link, } from '../../components'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
+import { Box, Typography, } from '@mui/material'
+import { Link, PageTitle, } from 'components'
+
 
 const Contact = ({ contactRef, contactControls, }) => {
     console.log('Contact render')
-    
+
     return (
         <Box
             sx={{
@@ -26,45 +24,20 @@ const Contact = ({ contactRef, contactControls, }) => {
         >
             <motion.div
                 initial={{ opacity: 1, }}
-                // initial={{ translateX: '-100vw', }}
                 animate={contactControls}
-                // animate={{ opacity: 1, }}
                 transition={{
                     duration: 1.5,
                     delay: 0,
                 }}
                 style={{
                     display: 'flex',
-                    // flex: 1,
-
                     justifyContent: 'center',
                     alignItems: 'flex-start',
                     flexDirection: 'column',
                     zIndex: 1000,
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-
-                        width: '100%',
-                        paddingBottom: 4
-                    }}
-                >
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            height: '1px',
-                            backgroundColor: 'primary.main',
-                            marginRight: 4,
-                        }}
-                    />
-                    <Typography variant='h3'>
-                        Contact
-                    </Typography>
-                </Box>
+                <PageTitle title='Contact' titlePosition='right' />
                 <Box
                     sx={{
                         display: 'flex',

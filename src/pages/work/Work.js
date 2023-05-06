@@ -1,21 +1,24 @@
 import React, { useRef, useEffect, useCallback, memo, } from 'react'
-import { calcLength, motion, useAnimation, } from 'framer-motion'
+import { motion, useAnimation, } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 import { useInView } from 'react-intersection-observer'
-
 import { Stack, Box, Typography, } from '@mui/material'
-
 import { styled } from '@mui/material/styles'
+import { PageTitle, Paragraphs, } from 'components'
+import { useTheme, } from '@mui/material/styles'
 
-import SiteImage2 from '../../assets/images/personal_site2.png'
+import PersonalSiteImage from 'assets/images/personal_site.png'
+import FuturoEstagiosImage from 'assets/images/futuro_estagios.png'
+import ResightWebImage from 'assets/images/resight_web.png'
 
 const WorkCardGrid = ({ title, developer, date, description, image, technologies, right = false, first = false }) => {
-    console.log('WorkCardGrid render')
+    console.log('WorkCardGrid render2')
+
     const workCardControls = useAnimation()
     const workCardImageControls = useAnimation()
     const workCardRef = useRef(null)
 
-    const initialLeftPanelValue = { x: right ? '100%' : '-100%', opacity: 0, }
+    const initialPanelValue = { x: right ? '100%' : '-100%', opacity: 0, }
 
     const { ref: inViewWorkCardRef, inView: inViewWorkCard, entry: entryAbout } = useInView({
         delay: 100,
@@ -26,6 +29,8 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
         workCardRef.current = node
         inViewWorkCardRef(node)
     }, [inViewWorkCardRef])
+
+    const theme = useTheme()
 
     useEffect(() => {
         if (inViewWorkCard) {
@@ -83,7 +88,7 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
             >
                 <Typography
                     component={motion.div}
-                    initial={initialLeftPanelValue}
+                    initial={initialPanelValue}
                     animate={workCardControls}
                     transition={{
                         duration: 0.5,
@@ -104,7 +109,7 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                 </Typography>
                 <Typography
                     component={motion.div}
-                    initial={initialLeftPanelValue}
+                    initial={initialPanelValue}
                     animate={workCardControls}
                     transition={{
                         duration: 0.5,
@@ -126,7 +131,7 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                 </Typography>
                 <Box
                     component={motion.div}
-                    initial={initialLeftPanelValue}
+                    initial={initialPanelValue}
                     animate={workCardControls}
                     transition={{
                         duration: 1,
@@ -136,23 +141,20 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
 
                     sx={{
                         zIndex: 3,
-
                         borderRadius: 1,
                         padding: 3,
                         position: 'relative',
-
                         backgroundColor: 'background.mainGlass',
                         backdropFilter: 'blur(10px)',
                         //  offset-x | offset-y | blur-radius | spread-radius | color
                         boxShadow: '0 8px 8px 0 rgba(0, 0, 0, 0.37)',
-                        // color: 'primary.white',
                     }}
                 >
-                    {description}
+                    <Paragraphs items={description} />
                 </Box>
                 <Stack
                     component={motion.div}
-                    initial={initialLeftPanelValue}
+                    initial={initialPanelValue}
                     animate={workCardControls}
                     transition={{
                         duration: 0.7,
@@ -216,10 +218,40 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
 
                     zIndex: 1,
 
-                    justifyContent: 'center',
-                    alignItems: 'center',
                 }}
             >
+                <Box
+                    // id='blob'
+                    sx={{
+
+                        height: '100%',
+                        width: '100%',
+                        // aspectRatio: 1,
+                        // position: 'absolute',
+                        // left: '50%',
+                        // top: '50%',
+                        // translate: '-50% -50%',
+                        // borderRadius: '50%',
+                        // background: 'linear-gradient(to right, red, blue)',
+                        // animation: 'gradient 5s ease infinite',
+                        // opacity: 0.8,
+                        // overflow: 'hidden',
+                        backgroundColor: 'red'
+                    }}
+                />
+                <Box
+                    // id='blur'
+                    sx={{
+                        height: '100%',
+                        // width: '100%',
+                        // position: 'absolute',
+                        zIndex: 0,
+                        backdropFilter: 'blur(12vmax)',
+                        overflow: 'hidden',
+
+                    }}
+                />
+
                 <Img
                     alt={title + 'label'}
                     src={image}
@@ -227,19 +259,23 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                         filter: 'grayscale(100%) contrast(1) brightness(60%)',
                         transitionDuration: '0.3s',
                         alignSelf: 'center',
-                        // blendMode: 'multiply',
-                        // 'mix-blend-mode': 'multiply',
-                        'opacity': 0.8,
+                        opacity: 0.8,
+                        borderRadius: 1,
+                        // border: 1,
+                        // borderColor: 'black',
+
                         '&:hover': {
-                            // transitionDuration: '0.5s',
                             transition: 'all 0.6s ease',
                             filter: 'grayscale(0%) contrast(1) brightness(100%)',
-                            'opacity': 1,
+                            opacity: 1,
+                            // boxShadow: `4px 4px 4px 4px ${theme.palette.primary.purple}`,
+
+                            // borderColor: theme.palette.primary.purple,
                         },
                     }}
                 />
             </Box>
-        </Box>
+        </Box >
     )
 }
 
@@ -248,17 +284,28 @@ const Work = ({ workRef, }) => {
 
     console.log('Work render')
 
+    const descriptions = {
+        portfolio: [
+            'This is the site you are currently using and also my first personal portfolio website!',
+            'It was built with the intention of showing my skills and experiences and I think this project has helped to vastly improve my design and web development skills.',
+            'I mainly focused on learning and improving my skills in HTML, CSS, responsivity and design.',
+        ],
+        resight: [
+            'A retail execution and monitoring solution. I worked with a team for two years in this project and it consisted of both a web and mobile application.',
+            'I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native.',
+        ],
+        futuroEstagios: [
+            'I worked together with a small team to develop this web application for contract management built to meet the specific needs of the customer.',
+        ]
+    }
+
     return (
         <Box
             sx={{
                 flex: 1,
-
-                // width e maxWidth customizados para incluir o BoxShadow + overflow: 'hidden'
+                // Nota: width e maxWidth customizados para incluir o BoxShadow + overflow: 'hidden'
                 width: { xs: '80%', sm: '80%', md: 'calc(80% + 16px)' },
                 maxWidth: { xs: '80%', sm: '80%', md: 'calc(976px)' },
-                // width: '80%', 
-                // maxWidth: '960px',
-
                 px: '-80px',
             }}
         >
@@ -267,41 +314,17 @@ const Work = ({ workRef, }) => {
                     display: 'flex',
                     flex: 1,
                     width: '100%',
-                    // height: '100vh',
                     paddingTop: 16,
                     paddingBottom: 16,
                     flexDirection: 'column',
                     px: '8px',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
                 }}
-                display='flex'
-                justifyContent='flex-start'
-                alignItems='flex-start'
                 ref={workRef}
             >
-                <Box
-                    sx={{
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-
-                        width: '100%',
-                        paddingBottom: 4,
-                    }}
-                >
-                    <Typography variant='h3'>
-                        Work
-                    </Typography>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            height: '1px',
-                            backgroundColor: 'text.main',
-                            marginLeft: 4,
-                        }}
-                    />
-                </Box>
+                <PageTitle title='Work' />
                 <Box
                     sx={{
                         display: 'flex',
@@ -318,7 +341,7 @@ const Work = ({ workRef, }) => {
                     }}
                 >
                     <Typography>
-                        Here are some projects I've worked for the last years.
+                        Here are some of my latest projects
                     </Typography>
                 </Box>
 
@@ -327,19 +350,8 @@ const Work = ({ workRef, }) => {
                     developer='Personal Project'
                     title='Portfolio Website'
                     date='2023'
-                    description={[
-                        <Typography paragraph key={uuidv4()}>
-                            This is the site you are currently using and also my first personal portfolio website!
-                        </Typography>,
-                        <Typography paragraph key={uuidv4()}>
-                            It was built with the intention of showing my skills and experiences and I think this project has helped to vastly improve my design and web development skills.
-                        </Typography>,
-                        <Typography paragraph key={uuidv4()}>
-                            I mainly focused on learning and improving my skills in HTML, CSS, responsivity and design.
-                        </Typography>,
-                    ]}
-
-                    image={SiteImage2}
+                    description={descriptions.portfolio}
+                    image={PersonalSiteImage}
                     technologies={[
                         {
                             label: 'React',
@@ -360,17 +372,8 @@ const Work = ({ workRef, }) => {
                     developer='Experity'
                     title='REsight'
                     date='2021'
-                    description={[
-                        <Typography paragraph key={uuidv4()}>
-                            A retail execution and monitoring solution.
-                            I worked with a team for two years in this project and it consisted of both a web and mobile application.
-                        </Typography>,
-                        <Typography paragraph key={uuidv4()}>
-                            I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native.
-                        </Typography>,
-                    ]}
-
-                    image={SiteImage2}
+                    description={descriptions.resight}
+                    image={ResightWebImage}
                     technologies={[
                         {
                             label: 'React',
@@ -406,13 +409,8 @@ const Work = ({ workRef, }) => {
                     developer='YEY'
                     title='Futuro Estágios'
                     date='2019'
-                    description={[
-                        <Typography paragraph key={uuidv4()}>
-                            A web application for contract management.
-                        </Typography>,
-                    ]}
-
-                    image={SiteImage2}
+                    description={descriptions.futuroEstagios}
+                    image={FuturoEstagiosImage}
                     technologies={[
                         {
                             label: 'React',

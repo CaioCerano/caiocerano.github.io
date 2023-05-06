@@ -1,79 +1,61 @@
-import React, { useState, } from 'react'
-
-import { Box, IconButton, Typography, Grid, Card, CardContent, CardActions, Collapse, Stack, List, ListItem, ListItemIcon, ListItemText, } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import { v4 as uuidv4 } from 'uuid'
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import React, { useEffect, useRef, useCallback, } from 'react'
+import { Box, Typography, } from '@mui/material'
+import { useInView } from 'react-intersection-observer'
+import { PageTitle, HiddenBox, CustomListItem, } from 'components'
 import { motion, useAnimation, } from 'framer-motion'
-import CircleIcon from '@mui/icons-material/Circle'
-
-const CustomListItem = ({ label }) => {
-    return (
-        <ListItem sx={{ paddingBottom: 0, paddingLeft: 0, padding: 0, marginBottom: '8px', }}>
-            <ListItemIcon
-                sx={{
-                    marginRight: 1.5,
-                    minWidth: '0px',
-                }}
-            >
-                <CircleIcon
-                    sx={{
-                        fontSize: '6px',
-                        color: 'text.primary',
-                        p: 0,
-                    }}
-                />
-            </ListItemIcon>
-            <ListItemText
-                // primary={label}
-                sx={{ marginTop: 0, }}
-            >
-                <Typography
-                    sx={{
-                        color: 'text.primary',
-                    }}
-                >
-                    {label}
-                </Typography>
-            </ListItemText>
-        </ListItem>
-    )
-}
 
 const ExperienceCard = ({ role, company, period, description, }) => {
     // ACCORDION
-    const technologies = [
-        {
-            label: 'React',
-            key: uuidv4(),
-        },
-        {
-            label: 'MUI',
-            key: uuidv4(),
-        },
-        {
-            label: 'Styled Components',
-            key: uuidv4(),
-        },
-        {
-            label: 'MySQL',
-            key: uuidv4(),
-        },
-        {
-            label: 'Node.js',
-            key: uuidv4(),
-        },
-    ]
+
+    const initialTitleValue = { x: '-100%', opacity: 0, }
+    const initialDetailsValue = { y: '-100%', opacity: 0, }
+    const titleControls = useAnimation()
+    const detailsControls = useAnimation()
+    const experienceCardRef = useRef(null)
+
+    const { ref: inViewExperienceCardRef, inView: inViewExperienceCard, entry: entryAbout } = useInView({
+        delay: 100,
+        threshold: 0.1,
+    })
+
+    const setExperienceCardRef = useCallback((node) => {
+        experienceCardRef.current = node
+        inViewExperienceCardRef(node)
+    }, [inViewExperienceCardRef])
+
+    useEffect(() => {
+        console.log('inViewExperienceCard exp', inViewExperienceCard)
+
+        if (inViewExperienceCard) {
+            titleControls.start({
+                opacity: 1,
+                x: 0,
+            })
+            detailsControls.start({
+                opacity: 1,
+                y: 0,
+            })
+        }
+        // else {
+        //     titleControls.start({
+        //         opacity: 0,
+        //         x: right ? '100%' : '-100%',
+        //     })
+        //     workCardImageControls.start({
+        //         opacity: 0,
+        //     })
+        // }
+    }, [inViewExperienceCard])
+
     return (
         <Box
+            ref={setExperienceCardRef}
             sx={{
                 flex: 1,
                 display: 'flex',
                 gridRow: { md: '1' },
                 gridColumn: { md: '1 / 6' },
                 width: '100%',
-
                 justifyContent: 'center',
                 flexDirection: 'column',
                 mt: 8,
@@ -84,6 +66,14 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                     m: 0,
                     mb: 1,
                 }}
+                component={motion.div}
+                initial={initialTitleValue}
+                animate={titleControls}
+                transition={{
+                    duration: 1,
+                    delay: 0.2,
+                    ease: [0.1, 0.2, .24, 1]
+                }}
             >
                 {role}
             </Typography>
@@ -91,69 +81,65 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                 variant='h4'
                 sx={{
                     zIndex: 3,
-                    // color: 'primary.purple',
                     position: 'static',
                     fontWeight: 'bold',
                     mb: 1,
+                }}
+                component={motion.div}
+                initial={initialTitleValue}
+                animate={titleControls}
+
+                transition={{
+                    duration: 1,
+                    delay: 0,
+                    ease: [0.1, 0.2, .24, 1]
                 }}
             >
                 {company}
             </Typography>
             <Typography
-
                 sx={{
                     m: 0,
                     mb: 2,
-                    // '&:nth-of-type(even)': {
-                    //     textAlign: 'right',
-                    // }
+                }}
+                component={motion.div}
+                initial={initialTitleValue}
+                animate={titleControls}
+                transition={{
+                    duration: 1,
+                    delay: 0.2,
+                    ease: [0.1, 0.2, .24, 1]
                 }}
             >
                 {period}
             </Typography>
-            <Box
-
-                sx={{
-                    zIndex: 3,
-
-                    borderRadius: 1,
-                    padding: 3,
-                    position: 'relative',
-
-                    backgroundColor: 'background.mainGlass',
-                    backdropFilter: 'blur(10px)',
-                    // color: 'primary.white',
-                }}
-            >
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque massa metus, efficitur a sodales nec, posuere sed est.
-                </Typography>
-                <Typography paragraph>
-                    Quisque dictum nibh metus. Aliquam ac sapien aliquet magna pellentesque lacinia. Cras pulvinar elit turpis, at pretium ipsum congue eget. Sed eget dictum sapien, sed mattis libero. Morbi pulvinar sem non ligula dapibus cursus. Phasellus dolor dui, convallis vel vestibulum vitae, maximus sit amet mauris. Sed tellus est, feugiat vel ipsum sed, scelerisque ultricies risus.
-                </Typography>
-                <Typography paragraph>
-                    Phasellus consequat velit ac diam placerat varius. Proin ultrices felis metus, eget molestie nisl bibendum nec. Aliquam posuere nibh sit amet hendrerit luctus.
-                </Typography>
-                <Grid container>
-                    <Grid item sx={{ marginRight: 16, }}>
-                        <List sx={{ padding: 0, }}>
-                            <CustomListItem label='JavaScript (ES6+)' />
-                            <CustomListItem label='React' />
-                            <CustomListItem label='HTML5' />
-                            <CustomListItem label='Node.js' />
-                        </List>
-                    </Grid>
-                    <Grid item>
-                        <List sx={{ padding: 0 }}>
-                            <CustomListItem label='TypeScript' />
-                            <CustomListItem label='React Native' />
-                            <CustomListItem label='CSS3' />
-                            <CustomListItem label='MySQL' />
-                        </List>
-                    </Grid>
-                </Grid>
-            </Box>
-
+            <HiddenBox>
+                <Box
+                    component={motion.div}
+                    initial={initialDetailsValue}
+                    animate={detailsControls}
+                    transition={{
+                        duration: 1,
+                        delay: 1,
+                        ease: [0.1, 0.2, .24, 1]
+                    }}
+                    sx={{
+                        zIndex: 3,
+                        borderRadius: 1,
+                        padding: 3,
+                        position: 'relative',
+                        backgroundColor: 'background.mainGlass',
+                        backdropFilter: 'blur(10px)',
+                    }}
+                >
+                    {description.map((itemValue) => {
+                        return (
+                            <CustomListItem label={itemValue} />
+                        )
+                    })
+                    }
+                </Box>
+            </HiddenBox>
         </Box>
     )
 }
@@ -162,133 +148,78 @@ const Experience = ({ experienceRef, experienceControls, }) => {
 
     console.log('Experience render')
 
-    const list = {
-        visible: { opacity: 1 },
-        hidden: { opacity: 0 },
-    }
-
-    const item = {
-        visible: { opacity: 1, x: 0 },
-        hidden: { opacity: 0, x: -100 },
-    }
-
     return (
         <Box
             sx={{
                 display: 'flex',
                 flex: 1,
                 width: '100%',
-                // height: '100vh',
                 paddingTop: 16,
                 paddingBottom: 16,
                 flexDirection: 'column',
                 overflow: 'hidden',
             }}
-            display='flex'
-            justifyContent='flex-start'
-            alignItems='flex-start'
             ref={experienceRef}
         >
-            <Box
-                sx={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-
-                    width: '100%',
-                    paddingBottom: 4,
-                }}
-            >
-
-                <Box
-                    sx={{
-                        flexGrow: 1,
-                        height: '1px',
-                        backgroundColor: 'text.main',
-                        marginRight: 4,
-                    }}
-                />
-                <Typography variant='h3'>
-                    Experience
-                </Typography>
-            </Box>
+            <PageTitle title='Experience' titlePosition='right' />
             <Box
                 sx={{
                     display: 'flex',
-                    // flex: 1,
                     justifyContent: 'center',
                     alignItems: 'flex-start',
                     flexDirection: 'column',
-
                     maxHeight: '800px',
-                    // maxHeight: '60vh',
-
                     zIndex: 1000,
-
                 }}
             >
                 <Typography>
-                    Here are the companies I worked for the last 3 years:
+                    Here are the companies I worked during the last years:
                 </Typography>
             </Box>
 
             <ExperienceCard
                 role='Software Engineer'
                 company='Accenture'
-                period='January 2021 - Current'
-                description='Currently developing foundation code of a web application for an internal project.'
+                period='January 2022 - Present'
+                description={[
+                    'Developed foundation code of a web application for an internal project using primarily React, TypeScript, HTML, CSS and MUI.',
+                    'Automated API documentation in Next.js.',
+                    'Fixed bugs and implemented different quality of life features.',
+                ]}
+                items={[
+                    'JavaScript (ES6+)',
+                    'TypeScript',
+                    'React',
+                    'React Native',
+                    'HTML5',
+                    'CSS3',
+                    'Node.js',
+                    'MySQL',
+                ]}
             />
 
             <ExperienceCard
                 role='Software Developer'
                 company='Experity - REsight'
                 period='December 2019 - December 2021'
-                description='Developed a mobile application focused on eCRM.'
-            />            
+                description={[
+                    'For more than 2 years I worked with a team on the development of a eCRM application that consisted of a web and mobile app.',
+                    'I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native, JavaScript (ES6+), HTML, CSS and SQLite.',
+                    'Worked together with a team of developers and designers to build friendly, consistent and responsive user experiences across the entire application.',
+                    'Wrote an extensive and comprehensive documentation for the project handover.',
+                ]}
+            />
 
-            {/* <Grid
-                container
-                sx={{
-                    pt: 2,
-                }}
-            >
-                <Grid
-                    item
-                    md={12}
-                    lg
-                    container
-                    sx={{
-                        // backgroundColor: 'red',
-                    }}
-                >
-                    <ExperienceCard
-                        role='Software Developer'
-                        company='Experity - REsight'
-                        period='December 2019 - December 2021'
-                        description='Developed a mobile application focused on eCRM.'
-                    />
-                </Grid>
-                <Grid
-                    item
-                    md={12}
-                    lg
-                    container
-                    sx={{
-                        // backgroundColor: 'green',
-                    }}
-                >
-                    <ExperienceCard
-                        role='Software Engineer'
-                        company='Accenture'
-                        period='January 2021 - Current'
-                        description='Currently developing foundation code of a web application for an internal project.'
-                    />
-                </Grid>
-            </Grid> */}
-            {/* <ExperienceCard2
-                image={Experity2Logo}
-            // image={ExperityLogo}
+            {/* <Accordion
+                role='Software Developer'
+                company='Experity - REsight'
+                period='December 2019 - December 2021'
+                description={[
+                    'For more than 2 years I worked with a team on the development of a eCRM application that consisted of a web and mobile app.',
+                    'I acted in different areas during this project but mostly in the development of the mobile application, using primarily React Native, JavaScript (ES6+), HTML, CSS and SQLite.',
+                    'Worked together with a team of developers and designers to build friendly, consistent and responsive user experiences across the entire application.',
+                    'Wrote an extensive and comprehensive documentation for the project handover.',
+                ]}
             /> */}
         </Box>
     )

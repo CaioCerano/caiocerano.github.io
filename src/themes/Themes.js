@@ -7,7 +7,8 @@ const secondaryWhite = 'rbg(220, 220, 220)'
 // const primaryWhite = 'rgb(250, 249, 246)'
 const primaryBlack = 'rgb(32, 32, 32)'
 const secondaryBlack = 'rgb(12, 12,12)'
-const primaryPurple = 'rgb(146, 15, 166)'
+const primaryPurple = '#8F10B2'
+// const primaryPurple = 'rgb(146, 15, 166)'
 
 const theme = (mode) => ({
     palette: {

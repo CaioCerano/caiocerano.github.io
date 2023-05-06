@@ -27,30 +27,37 @@ import LogoLight from '../../assets/images/v2-black.png'
 import LogoDark from '../../assets/images/v2-white.png'
 
 import { ColorModeContext } from '../../routes'
+import ResumeFile from 'assets/files/Resume-Caio-Cerano.pdf'
 
 /* ============================= TO DO =============================
     - Ajustar mobile
 */
 
 const NavBarItem = (props) => {
-    const { name, customRef, index, scrollToSection, firsTimeRender, setTirsTimeRender, } = props
+    const { name, customRef, index, scrollToSection, firsTimeRender, setTirsTimeRender, file, downloadResume, } = props
 
     return (
         <Button
             sx={{
                 color: 'text.primary',
-                borderRadius: 0,
                 padding: 0,
                 textTransform: 'none',
                 paddingX: 1,
                 marginLeft: { sm: '10px', md: '30px' },
+                borderRadius: 1,
+
                 ':hover': {
-                    color: 'primary.secondary',
+                    color: 'primary.purple',
+                    // color: 'primary.secondary',
                     fontWeight: 'bold',
-                    backgroundColor: 'text.primary',
+                    // backgroundColor: 'text.primary',
+                    backgroundColor: 'transparent',
                 },
             }}
-            onClick={() => scrollToSection(customRef)}
+            onClick={() => {
+                if (customRef) scrollToSection(customRef)
+                if (file) downloadResume(file)
+            }}
         >
             <Collapse
                 orientation='horizontal'
@@ -105,7 +112,7 @@ const ButtonTheme = (props) => {
         <Button
             sx={{
                 color: 'text.primary',
-                borderRadius: 0,
+                borderRadius: 1,
                 textTransform: 'none',
                 marginLeft: { sm: '10px', md: '30px' },
                 ':hover': {
@@ -160,7 +167,7 @@ const Navbar = (props) => {
         },
         {
             name: 'Resume',
-            ref: contactRef,
+            file: ResumeFile,
         },
     ]
     const [logo, setLogo] = useState(theme.palette.mode === 'dark' ? LogoDark : LogoLight)
@@ -184,7 +191,7 @@ const Navbar = (props) => {
         // Idk why but the scrollIntoView only works for mobile browsers using the timeout function
         setTimeout(() => {
             elementRef.current.scrollIntoView({ behavior: 'smooth' })
-        }, 100);
+        }, 100)
     }
 
     // ----------------------------------Mobile----------------------------------
@@ -202,11 +209,14 @@ const Navbar = (props) => {
 
             <Divider />
             <List>
-                {navItems.map(({ name, ref }) => (
+                {navItems.map(({ name, ref, file, }) => (
                     <ListItem key={name} disablePadding>
                         <ListItemButton
                             sx={{ textAlign: 'center', }}
-                            onClick={() => scrollToSection(ref)}
+                            onClick={() => {
+                                if (ref) scrollToSection(ref)
+                                if (file) downloadResume(file)
+                            }}
                         >
                             <ListItemText primary={name} />
                         </ListItemButton>
@@ -267,6 +277,13 @@ const Navbar = (props) => {
         }
     }, [])
 
+    const downloadResume = (file) => {
+        const link = document.createElement("a")
+        link.download = 'Resume-Caio-Cerano.pdf'
+        link.href = file
+        link.click()
+    }
+
     return (
         <>
             <Slide
@@ -280,10 +297,7 @@ const Navbar = (props) => {
                 <AppBar
                     component='nav'
                     sx={{
-                        background: `linear-gradient(to top,${theme.palette.background.navBarSecondary},${theme.palette.background.navBarMain})`,
-
-                        // backgroundColor: 'rgba(33, 33, 33, 0.6)',
-                        // backgroundColor: 'rgba(30, 23, 52, 0.9)',
+                        background: `linear-gradient(to top, ${theme.palette.background.navBarSecondary}, ${theme.palette.background.navBarMain})`,
                         backdropFilter: 'blur(10px)',
                     }}
                 >
@@ -293,7 +307,10 @@ const Navbar = (props) => {
                             aria-label='open drawer'
                             edge='start'
                             onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: 'none' } }}
+                            sx={{
+                                mr: 2,
+                                display: { sm: 'none' },
+                            }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -310,18 +327,13 @@ const Navbar = (props) => {
                             <Button
                                 key={'navbarlogo'}
                                 sx={{
-                                    borderRadius: 0,
+                                    borderRadius: 1,
                                     ':hover': {
                                         color: 'primary.secondary',
                                         fontWeight: 'bold',
                                         backgroundColor: 'text.primary',
-
                                     },
                                 }}
-                                // sx={{
-                                //     color: 'text.primary',
-                                //     textTransform: 'none'
-                                // }}
                                 onMouseEnter={() => onHoverLogo(true)}
                                 onMouseLeave={() => onHoverLogo(false)}
                                 onClick={() => scrollToSection(startPageRef)}
@@ -339,7 +351,7 @@ const Navbar = (props) => {
                         </Box>
 
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                            {navItems.map(({ name, ref, }, index) => {
+                            {navItems.map(({ name, ref, file, }, index) => {
                                 return <NavBarItem
                                     key={name + index}
                                     name={name}
@@ -348,6 +360,8 @@ const Navbar = (props) => {
                                     scrollToSection={scrollToSection}
                                     firsTimeRender={firsTimeRender}
                                     setTirsTimeRender={setTirsTimeRender}
+                                    file={file}
+                                    downloadResume={downloadResume}
                                 />
 
                             })}

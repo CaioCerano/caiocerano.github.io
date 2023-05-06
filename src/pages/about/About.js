@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useCallback, useState, } from 'react'
 import { motion, useAnimation, } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
-import { Box, Typography, Grid, List, ListItem, ListItemIcon, ListItemText, Divider, } from '@mui/material'
-import { HiddenBox, Link, } from '../../components'
+import { Box, Typography, Grid, List, ListItem, ListItemIcon, ListItemText, } from '@mui/material'
+import { HiddenBox, Link, PageTitle, ItemsList, } from 'components'
 
 import CircleIcon from '@mui/icons-material/Circle'
 
@@ -37,7 +37,12 @@ const About = ({ navAboutRef, }) => {
 
     const CustomListItem = ({ label }) => {
         return (
-            <ListItem sx={{ paddingBottom: 0, paddingLeft: 0, padding: 0, marginBottom: '8px', }}>
+            <ListItem
+                sx={{
+                    p: 0,
+                    mb: '8px',
+                }}
+            >
                 <ListItemIcon
                     sx={{
                         marginRight: 1.5,
@@ -75,53 +80,30 @@ const About = ({ navAboutRef, }) => {
             sx={{
                 flex: 1,
                 overflow: 'hidden',
-
                 display: 'flex',
-                // flex: 1,
-
                 justifyContent: 'center',
                 alignItems: 'flex-start',
                 flexDirection: 'column',
                 zIndex: 1000,
-
                 width: '100%',
-
                 pt: 16,
                 pb: 16,
             }}
         >
             <HiddenBox>
-                <Box
+                <PageTitle
+                    title='About me'
                     component={motion.div}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        width: '100%',
-                        paddingBottom: 4
+                    initial={{
+                        translateY: '100%',
+                        opacity: 0,
                     }}
-
-                    initial={{ translateY: '100%', opacity: 0, }}
                     animate={aboutTitleControls}
                     transition={{
                         duration: 0.8,
-                        delay: 0.2,
+                        delay: 0,
                     }}
-                >
-                    <Typography variant='h3'>
-                        About me
-                    </Typography>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            height: '1px',
-                            backgroundColor: 'text.main',
-                            // opacity: 0.2,
-                            marginLeft: 4,
-                        }}
-                    />
-                </Box>
+                />
             </HiddenBox>
             <HiddenBox>
                 <Box
@@ -130,17 +112,13 @@ const About = ({ navAboutRef, }) => {
                         justifyContent: 'center',
                         alignItems: 'flex-start',
                         flexDirection: 'column',
-
-                        // maxHeight: '800px',
-                        // maxHeight: '60vh',
                     }}
                     component={motion.div}
-
                     initial={{ translateY: '-100%', opacity: 0, }}
                     animate={aboutTitleControls}
                     transition={{
                         duration: 0.8,
-                        delay: 0.4,
+                        delay: 0.2,
                     }}
                 >
                     <Typography paragraph >
@@ -158,24 +136,18 @@ const About = ({ navAboutRef, }) => {
                         Here are some of the technologies that I've been using recently:
                     </Typography>
 
-                    <Grid container>
-                        <Grid item sx={{ marginRight: 16, }}>
-                            <List sx={{ padding: 0, }}>
-                                <CustomListItem label='JavaScript (ES6+)' />
-                                <CustomListItem label='React' />
-                                <CustomListItem label='HTML5' />
-                                <CustomListItem label='Node.js' />
-                            </List>
-                        </Grid>
-                        <Grid item>
-                            <List sx={{ padding: 0 }}>
-                                <CustomListItem label='TypeScript' />
-                                <CustomListItem label='React Native' />
-                                <CustomListItem label='CSS3' />
-                                <CustomListItem label='MySQL' />
-                            </List>
-                        </Grid>
-                    </Grid>
+                    <ItemsList
+                        items={[
+                            'JavaScript (ES6+)',
+                            'TypeScript',
+                            'React',
+                            'React Native',
+                            'HTML5',
+                            'CSS3',
+                            'Node.js',
+                            'MySQL',
+                        ]}
+                    />
                 </Box>
             </HiddenBox>
         </Box>

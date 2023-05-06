@@ -1,6 +1,4 @@
-import React, { useState, useMemo, useContext, createContext, } from 'react'
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom'
-import { ParallaxProvider } from 'react-scroll-parallax'
+import React, { useState, useMemo, createContext, } from 'react'
 import { ThemeProvider, } from '@mui/material/styles'
 import { ThemeProvider as StyledThemeProvider } from "styled-components"
 import { defaultTheme, styledTheme, } from './themes/Themes'
@@ -8,7 +6,6 @@ import { createTheme, responsiveFontSizes, } from '@mui/material/styles'
 import CssBaseline from "@mui/material/CssBaseline"
 
 import Main from './pages/main/Main'
-import GlobalStyles from "@mui/material/GlobalStyles"
 
 export const ColorModeContext = createContext({ toggleColorMode: () => { } })
 
@@ -26,7 +23,10 @@ const AppRoutes = () => {
         [],
     )
 
-    const MuiTheme = useMemo(() => responsiveFontSizes(createTheme(defaultTheme(mode))), [mode])
+    const MuiTheme = useMemo(
+        () => responsiveFontSizes(createTheme(defaultTheme(mode))),
+        [mode]
+    )
 
     return (
         <ColorModeContext.Provider value={colorMode}>
