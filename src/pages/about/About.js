@@ -88,6 +88,7 @@ const About = ({ navAboutRef, }) => {
                             sx={{
                                 p: 3,
                                 flexDirection: 'column',
+                                zIndex: 9999,
                             }}
                         >
                             <Typography paragraph >
