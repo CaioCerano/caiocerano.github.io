@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.db278b10.css",
-    "main.js": "/static/js/main.44027da2.js",
+    "main.js": "/static/js/main.1d4d590f.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
     "static/media/resight_web.png": "/static/media/resight_web.65c44933b5ab08cc325b.png",
-    "static/media/personal_site.png": "/static/media/personal_site.90f689dc4cb5995d7fe7.png",
     "static/media/Resume-Caio-Cerano.pdf": "/static/media/Resume-Caio-Cerano.6818da5f17b4c8b0ec02.pdf",
     "static/media/futuro_estagios.png": "/static/media/futuro_estagios.592f01210c85753c31f7.png",
+    "static/media/portoflio.png": "/static/media/portoflio.6a50201985e401070a7d.png",
     "static/media/v2-black.png": "/static/media/v2-black.0b749196dc168adcc037.png",
     "static/media/v2-white.png": "/static/media/v2-white.ead2b39a8fae7e345bbc.png",
     "index.html": "/index.html",
     "main.db278b10.css.map": "/static/css/main.db278b10.css.map",
-    "main.44027da2.js.map": "/static/js/main.44027da2.js.map",
+    "main.1d4d590f.js.map": "/static/js/main.1d4d590f.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.db278b10.css",
-    "static/js/main.44027da2.js"
+    "static/js/main.1d4d590f.js"
   ]
 }
