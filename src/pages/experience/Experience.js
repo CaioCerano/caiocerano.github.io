@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useCallback, } from 'react'
+import React, { useEffect, useRef, useCallback, useState, } from 'react'
 import { Box, Typography, } from '@mui/material'
 import { useInView } from 'react-intersection-observer'
-import { PageTitle, HiddenBox, CustomListItem, } from 'components'
+import { PageTitle, HiddenBox, CustomListItem, HoverBox, } from 'components'
 import { motion, useAnimation, } from 'framer-motion'
+import { useTheme, } from '@mui/material/styles'
 
 const ExperienceCard = ({ role, company, period, description, }) => {
     // ACCORDION
+    const theme = useTheme()
 
     const initialTitleValue = { x: '-100%', opacity: 0, }
     const initialDetailsValue = { y: '-100%', opacity: 0, }
@@ -123,21 +125,19 @@ const ExperienceCard = ({ role, company, period, description, }) => {
                         delay: 1,
                         ease: [0.1, 0.2, .24, 1]
                     }}
-                    sx={{
-                        zIndex: 3,
-                        borderRadius: 1,
-                        padding: 3,
-                        position: 'relative',
-                        backgroundColor: 'background.mainGlass',
-                        backdropFilter: 'blur(10px)',
-                    }}
                 >
-                    {description.map((itemValue) => {
-                        return (
-                            <CustomListItem label={itemValue} />
-                        )
-                    })
-                    }
+                    <HoverBox>
+                        <Box
+                            sx={{ padding: 3 }}
+                        >
+                            {description.map((itemValue) => {
+                                return (
+                                    <CustomListItem label={itemValue} />
+                                )
+                            })
+                            }
+                        </Box>
+                    </HoverBox>
                 </Box>
             </HiddenBox>
         </Box>

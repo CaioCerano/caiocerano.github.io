@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useInView } from 'react-intersection-observer'
 import { Stack, Box, Typography, } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { PageTitle, Paragraphs, } from 'components'
+import { PageTitle, Paragraphs, HoverBox, } from 'components'
 import { useTheme, } from '@mui/material/styles'
 
 import PersonalSiteImage from 'assets/images/personal_site.png'
@@ -173,7 +173,7 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                         justifyContent: right ? { xs: 'flex-start', sm: 'flex-start', md: 'flex-end' } : 'flex-start',
                     }}
                 >
-                    {technologies && technologies.length > 0 && technologies.map(({ label, link }, index) => {
+                    {technologies && technologies.length > 0 && technologies.map(({ label, link, }, index) => {
                         return <Typography
                             sx={{
                                 zIndex: 4,
@@ -220,38 +220,6 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
 
                 }}
             >
-                <Box
-                    // id='blob'
-                    sx={{
-
-                        height: '100%',
-                        width: '100%',
-                        // aspectRatio: 1,
-                        // position: 'absolute',
-                        // left: '50%',
-                        // top: '50%',
-                        // translate: '-50% -50%',
-                        // borderRadius: '50%',
-                        // background: 'linear-gradient(to right, red, blue)',
-                        // animation: 'gradient 5s ease infinite',
-                        // opacity: 0.8,
-                        // overflow: 'hidden',
-                        backgroundColor: 'red'
-                    }}
-                />
-                <Box
-                    // id='blur'
-                    sx={{
-                        height: '100%',
-                        // width: '100%',
-                        // position: 'absolute',
-                        zIndex: 0,
-                        backdropFilter: 'blur(12vmax)',
-                        overflow: 'hidden',
-
-                    }}
-                />
-
                 <Img
                     alt={title + 'label'}
                     src={image}
@@ -275,7 +243,8 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                     }}
                 />
             </Box>
-        </Box >
+
+        </Box>
     )
 }
 

@@ -234,7 +234,7 @@ const Main = () => {
         <Box
             sx={{
                 display: 'flex',
-                // maxWidth: '100vw',
+                backgroundColor: 'background.main'
             }}
             ref={listInnerRef}
             id='mainView'
