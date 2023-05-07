@@ -4,7 +4,7 @@ import { useTheme, } from '@mui/material/styles'
 
 const LinkStyled = styled.a`
     color: ${props => props.primaryColor};
-    position: absolute;
+    position: relative;
     text-decoration: none;
     cursor: pointer;
     font-weight: 700;
