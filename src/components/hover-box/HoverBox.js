@@ -1,5 +1,7 @@
 import React, { useRef, useState, } from 'react'
 import { Box, } from '@mui/material'
+import { useTheme, } from '@mui/material/styles'
+
 
 const HoverBox = (props) => {
     const {
@@ -15,6 +17,7 @@ const HoverBox = (props) => {
     const [x, setX] = useState(0)
     const [y, setY] = useState(0)
 
+    const theme = useTheme()
 
     const handleMouseMove = e => {
         e.persist()
@@ -45,7 +48,7 @@ const HoverBox = (props) => {
                     // height: '100%',
                     width: '100%',
 
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
 
                     borderRadius: 1,
                     // cursor: 'pointer',
