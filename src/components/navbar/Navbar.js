@@ -16,17 +16,16 @@ import {
     Slide,
 } from '@mui/material'
 import { useTheme, } from '@mui/material/styles'
-import { Link, } from '../'
 
 import MenuIcon from '@mui/icons-material/Menu'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import { styled } from '@mui/material/styles'
 
-import LogoLight from '../../assets/images/v2-black.png'
-import LogoDark from '../../assets/images/v2-white.png'
+import LogoLight from 'assets/images/v2-black.png'
+import LogoDark from 'assets/images/v2-white.png'
 
-import { ColorModeContext } from '../../routes'
+import { ColorModeContext } from 'routes'
 import ResumeFile from 'assets/files/Resume-Caio-Cerano.pdf'
 
 /* ============================= TO DO =============================
@@ -106,7 +105,7 @@ const NavBarItem = (props) => {
 }
 
 const ButtonTheme = (props) => {
-    const { colorMode, theme, } = props
+    const { colorMode, theme, sideBar = false } = props
 
     return (
         <Button
@@ -114,7 +113,9 @@ const ButtonTheme = (props) => {
                 color: 'text.primary',
                 borderRadius: 1,
                 textTransform: 'none',
+                pl: !sideBar && '8px',
                 marginLeft: { sm: '10px', md: '30px' },
+
                 ':hover': {
                     color: 'primary.secondary',
                     fontWeight: 'bold',
@@ -196,23 +197,40 @@ const Navbar = (props) => {
 
     // ----------------------------------Mobile----------------------------------
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', }}>
-            <Button key={'home'}
+        <Box
+            onClick={handleDrawerToggle}
+            sx={{
+                textAlign: 'flex-start',
+            }}
+        >
+            <Button
+                key={'home'}
                 onClick={() => scrollToSection(startPageRef)}
+                sx={{
+                    px: 2,
+                    py: 2,
+                    height: '56px',
+                }}
             >
                 <Typography
-                    variant='h6' color='inherit' component='div'
+                    variant='h6'
+                    color='inherit'
+                    component='div'
                 >
                     Caio Cerano
                 </Typography>
             </Button>
 
-            <Divider />
+            {/* <Divider /> */}
             <List>
                 {navItems.map(({ name, ref, file, }) => (
                     <ListItem key={name} disablePadding>
                         <ListItemButton
-                            sx={{ textAlign: 'center', }}
+                            sx={{
+                                textAlign: 'flex-start',
+                                // backgroundColor: 'red',
+                                px: 2,
+                            }}
                             onClick={() => {
                                 if (ref) scrollToSection(ref)
                                 if (file) downloadResume(file)
@@ -222,11 +240,17 @@ const Navbar = (props) => {
                         </ListItemButton>
                     </ListItem>
                 ))}
-
-                <ButtonTheme
-                    colorMode={colorMode}
-                    theme={theme}
-                />
+                <Box
+                    sx={{
+                        px: 2,
+                    }}
+                >
+                    <ButtonTheme
+                        colorMode={colorMode}
+                        theme={theme}
+                        sideBar={true}
+                    />
+                </Box>
             </List>
         </Box>
     )
@@ -310,6 +334,7 @@ const Navbar = (props) => {
                             sx={{
                                 mr: 2,
                                 display: { sm: 'none' },
+                                color: 'text.primary',
                             }}
                         >
                             <MenuIcon />
@@ -383,7 +408,18 @@ const Navbar = (props) => {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+
+                        '& .MuiDrawer-paper': {
+                            boxSizing: 'border-box',
+                            width: drawerWidth,
+                            backgroundColor: 'background.sideBar',
+                            backdropFilter: 'blur(10px)',
+                            backgroundImage: 'none'
+                        },
+                        '& .MuiBackdrop-root': {
+                            backgroundColor: `rgba(0, 0, 0,${theme.palette.mode === 'dark' ? '0.5' : '0'})`
+                        },
                     }}
                 >
                     {drawer}

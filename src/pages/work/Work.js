@@ -224,7 +224,8 @@ const WorkCardGrid = ({ title, developer, date, description, image, technologies
                     alt={title + 'label'}
                     src={image}
                     sx={{
-                        filter: 'grayscale(100%) contrast(1) brightness(60%)',
+                        filter: {xs: 'grayscale(0%) contrast(1) brightness(100%)', sm: 'grayscale(100%) contrast(1) brightness(60%)' },
+                        // filter: 'grayscale(100%) contrast(1) brightness(60%)',
                         transitionDuration: '0.3s',
                         alignSelf: 'center',
                         opacity: 0.8,

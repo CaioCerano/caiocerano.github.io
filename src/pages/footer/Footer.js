@@ -10,12 +10,12 @@ const Footer = () => {
             sx={{
                 display: 'flex',
                 width: '100%',
-                paddingTop: 32,
+                paddingTop: 16,
                 paddingBottom: 4,
                 justifyContent: 'center',
             }}
         >
-            <Link onClick={() => window.open('https://github.com/CaioCerano/caiocerano.github.io')}>
+            <Link textAlign='center' onClick={() => window.open('https://github.com/CaioCerano/caiocerano.github.io')}>
                 Designed & Built by Caio Cerano Silva
             </Link>
         </Box>

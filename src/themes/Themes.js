@@ -30,6 +30,7 @@ const theme = (mode) => ({
                     navBarMain: 'rgba(220, 220, 220, 0.6)',
                     // navBarMain: 'rgba(207, 216, 220, 0.6)',
                     navBarSecondary: 'rgba(236, 239, 241, 0.4)',
+                    sideBar: 'rgba(220, 220, 220, 0.6)',
                 },
                 text: {
                     main: primaryBlack,
@@ -54,6 +55,7 @@ const theme = (mode) => ({
                     mainGlass: 'rgba(32, 32, 32, 0.4)',
                     navBarMain: 'rgba(8, 8, 8, 0.6)',
                     navBarSecondary: 'rgba(8, 8, 8, 0.3)',
+                    sideBar: 'rgba(32, 32, 32, 0.4)',
                 },
                 text: {
                     main: primaryWhite,

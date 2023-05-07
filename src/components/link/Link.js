@@ -1,4 +1,4 @@
-import React, { useState, } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useTheme, } from '@mui/material/styles'
 
@@ -9,7 +9,8 @@ const LinkStyled = styled.a`
     cursor: pointer;
     font-weight: 700;
     z-index: 99999;
-    
+    text-align: ${props => props.textAlign};
+
     :before {
         content: '';
         position: absolute;
@@ -36,11 +37,11 @@ const LinkStyled = styled.a`
 `
 
 const Link = (props) => {
-    const { children, target, onClick, } = props
+    const { children, target, onClick, textAlign, } = props
     
     const theme = useTheme()
 
-    return <LinkStyled target={target} onClick={onClick} primaryColor={theme.palette.text.main} purple={theme.palette.primary.purple}>{children}</LinkStyled>
+    return <LinkStyled textAlign={textAlign} target={target} onClick={onClick} primaryColor={theme.palette.text.main} purple={theme.palette.primary.purple}>{children}</LinkStyled>
 }
 
 export default Link
