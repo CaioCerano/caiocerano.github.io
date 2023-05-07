@@ -234,7 +234,11 @@ const Main = () => {
         <Box
             sx={{
                 display: 'flex',
-                backgroundColor: 'background.main'
+                backgroundColor: 'background.main',
+                transition: "all .8s ease",
+                WebkitTransition: "all .8s ease",
+                MozTransition: "all .8s ease",
+                overflow: 'hidden',
             }}
             ref={listInnerRef}
             id='mainView'

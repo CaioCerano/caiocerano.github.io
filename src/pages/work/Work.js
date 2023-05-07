@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles'
 import { PageTitle, Paragraphs, HoverBox, } from 'components'
 import { useTheme, } from '@mui/material/styles'
 
-import PersonalSiteImage from 'assets/images/personal_site.png'
+import PersonalSiteImage from 'assets/images/portoflio.png'
 import FuturoEstagiosImage from 'assets/images/futuro_estagios.png'
 import ResightWebImage from 'assets/images/resight_web.png'
 
