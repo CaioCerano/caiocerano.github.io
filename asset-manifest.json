@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.db278b10.css",
-    "main.js": "/static/js/main.1d4d590f.js",
+    "main.js": "/static/js/main.9b0ec7e7.js",
     "static/js/787.3ba5e41c.chunk.js": "/static/js/787.3ba5e41c.chunk.js",
     "static/media/resight_web.png": "/static/media/resight_web.65c44933b5ab08cc325b.png",
     "static/media/Resume-Caio-Cerano.pdf": "/static/media/Resume-Caio-Cerano.6818da5f17b4c8b0ec02.pdf",
@@ -11,11 +11,11 @@
     "static/media/v2-white.png": "/static/media/v2-white.ead2b39a8fae7e345bbc.png",
     "index.html": "/index.html",
     "main.db278b10.css.map": "/static/css/main.db278b10.css.map",
-    "main.1d4d590f.js.map": "/static/js/main.1d4d590f.js.map",
+    "main.9b0ec7e7.js.map": "/static/js/main.9b0ec7e7.js.map",
     "787.3ba5e41c.chunk.js.map": "/static/js/787.3ba5e41c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.db278b10.css",
-    "static/js/main.1d4d590f.js"
+    "static/js/main.9b0ec7e7.js"
   ]
 }
