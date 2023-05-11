@@ -180,7 +180,7 @@ const Experience = ({ experienceRef, experienceControls, }) => {
             <ExperienceCard
                 role='Software Engineer'
                 company='Accenture'
-                period='January 2022 - Present'
+                period='January 2022 - May 2023'
                 description={[
                     'Developed foundation code of a web application for an internal project using primarily React, TypeScript, HTML, CSS and MUI.',
                     'Automated API documentation in Next.js.',

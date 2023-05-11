@@ -1,4 +1,4 @@
-import React, { useState, useMemo, createContext, } from 'react'
+import React, { useState, useMemo, createContext, useEffect, } from 'react'
 import { ThemeProvider, } from '@mui/material/styles'
 import { ThemeProvider as StyledThemeProvider } from "styled-components"
 import { defaultTheme, styledTheme, } from './themes/Themes'
@@ -12,12 +12,21 @@ export const ColorModeContext = createContext({ toggleColorMode: () => { } })
 const AppRoutes = () => {
     const [mode, setMode] = useState('dark')
 
+    useEffect(() => {
+        if (typeof window !== 'undefined')
+            setMode(localStorage.getItem('theme') || 'dark')
+    }, [])
+
+
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) =>
-                    prevMode === 'light' ? 'dark' : 'light',
-                )
+                setMode((prevMode) => {
+                    const newTheme = prevMode === 'light' ? 'dark' : 'light'
+
+                    localStorage.setItem('theme', newTheme)
+                    return newTheme
+                })
             },
         }),
         [],
